@@ -13,25 +13,24 @@
  *     }
  * }
  */
-
-
 class Solution {
     public List<Integer> rightSideView(TreeNode root) {
         List<Integer> result = new ArrayList<>();
         if (root == null) return result;
         
-        Queue<TreeNode> queue = new LinkedList<>();
-        queue.offer(root);
+        Queue<TreeNode> q = new LinkedList<>();
+        q.offer(root);
         
-        while (!queue.isEmpty()) {
-            int size = queue.size();
+        while (!q.isEmpty()) {
+            int size = q.size();
             for (int i = 0; i < size; i++) {
-                TreeNode node = queue.poll();
-                if (i == size - 1) {  // Rightmost at current level
+                TreeNode node = q.poll();
+                // Rightmost in level (last in current queue)
+                if (i == size - 1) {
                     result.add(node.val);
                 }
-                if (node.left != null) queue.offer(node.left);
-                if (node.right != null) queue.offer(node.right);
+                if (node.left != null) q.offer(node.left);
+                if (node.right != null) q.offer(node.right);
             }
         }
         return result;
