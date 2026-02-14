@@ -1,21 +1,22 @@
 class Solution {
-    Integer[] dp;  // Use Integer[] for null checks
-    
-    public int climbStairs(int n) {
-        dp = new Integer[n+1];  // -1 means not computed
-        return climbStairsHelper(n);
-    }
-    
-    private int climbStairsHelper(int n) {
-        // Base cases
-        if (n <= 1) return 1;
-        if (n == 2) return 2;
-        
-        // Memoization check
-        if (dp[n] != null) return dp[n];
-        
-        // Recursive computation + store result
-        dp[n] = climbStairsHelper(n-1) + climbStairsHelper(n-2);
+
+    int climb(int n,int[] dp){
+
+        if(n<=1)return 0;
+
+        if(dp[n]!=0)return dp[n];
+
+        dp[n]=1+climb(n-1,dp)+climb(n-2,dp);
+
         return dp[n];
+    }
+    public int climbStairs(int n) {
+        int[] dp=new int[n+1];
+
+        for(int i=0;i<n;i++){
+            dp[i]=0;
+        }
+
+       return 1+climb(n,dp);
     }
 }
