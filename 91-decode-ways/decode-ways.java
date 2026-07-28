@@ -1,0 +1,38 @@
+class Solution {
+
+    public int numDecodings(String s) {
+
+        int n = s.length();
+
+        int[] dp = new int[n + 1];
+
+        // Reached the end successfully
+        dp[n] = 1;
+
+        for (int i = n - 1; i >= 0; i--) {
+
+            // '0' cannot be decoded
+            if (s.charAt(i) == '0') {
+                dp[i] = 0;
+                continue;
+            }
+
+            // Take one digit
+            dp[i] = dp[i + 1];
+
+            // Take two digits
+            if (i + 1 < n) {
+
+                int num = Integer.parseInt(
+                    s.substring(i, i + 2)
+                );
+
+                if (num >= 10 && num <= 26) {
+                    dp[i] += dp[i + 2];
+                }
+            }
+        }
+
+        return dp[0];
+    }
+}
