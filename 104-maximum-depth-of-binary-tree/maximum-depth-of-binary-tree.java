@@ -14,27 +14,23 @@
  * }
  */
 class Solution {
-    int maxi=0;
-    void traverse(TreeNode tmp,int cnt){
 
-        if(tmp==null){
-        return ;
-        }
-        if(tmp.left==null&&tmp.right==null)
-        {
-            cnt++;
-            maxi=Math.max(maxi,cnt);
-        }
-        cnt++;
-        traverse(tmp.left,cnt);
-        traverse(tmp.right,cnt);
+    int recursion(TreeNode root){
+
+        if(root == null)
+        return 0;
+        int leftR = 1+recursion(root.left);
+        int rightR = 1+recursion(root.right);
+        int a=Math.max(leftR,rightR);
+        return a;
     }
 
     public int maxDepth(TreeNode root) {
         
-        TreeNode tmp =root;
-        int cnt=0;
-        traverse(tmp,cnt);
-        return maxi;
+        if(root == null)
+        return 0;
+
+        return recursion(root);
+
     }
 }
