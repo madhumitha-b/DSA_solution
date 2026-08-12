@@ -15,32 +15,28 @@
  */
 class Solution {
 
-    void recursion(TreeNode root,PriorityQueue<Integer> pq){
+    PriorityQueue<Integer> pq = new PriorityQueue<>();
+
+    void recursion(TreeNode root){
 
         if(root == null) return ;
 
         pq.offer(root.val);
 
-        recursion(root.left,pq);
-        recursion(root.right,pq);
+        recursion(root.left);
+        recursion(root.right);
     }
+
     public int kthSmallest(TreeNode root, int k) {
     
-    PriorityQueue<Integer> pq = new PriorityQueue<>();
+        int res=0;
 
-    if(root == null || k==0)
-    return 0;
+        recursion(root);
 
-     recursion(root,pq);  
-
-     int cnt=k-1; 
-
-     while(!pq.isEmpty() && cnt != 0){
-        
-        pq.poll();
-        cnt--;
-     }
-     
-     return pq.peek();
+        while(k!=0){
+            res=pq.poll();
+            k--;
+        }
+        return res;
     }
 }
