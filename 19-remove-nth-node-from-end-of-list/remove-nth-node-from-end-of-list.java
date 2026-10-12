@@ -1,26 +1,61 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
 class Solution {
     public ListNode removeNthFromEnd(ListNode head, int n) {
+        
+        Map<Integer,ListNode> mp = new HashMap<>();
 
-        ListNode dummy = new ListNode(0);
-        dummy.next = head;
+        ListNode slw = head;
+        int cnt = 0;
 
-        ListNode slow = dummy;
-        ListNode fast = dummy;
-
-        // Move fast n steps ahead
-        for (int i = 0; i < n; i++) {
-            fast = fast.next;
+        while(slw!= null){
+            mp.put(cnt,slw.next);
+            cnt++;
+            slw=slw.next;
         }
 
-        // Move both pointers until fast reaches the last node
-        while (fast.next != null) {
-            slow = slow.next;
-            fast = fast.next;
+        if(cnt == n && n == 1)
+        return null;
+        int index = cnt-n;
+
+        if(index == 0)
+        {
+            ListNode r = head.next;
+            head.next = null;
+            head=r;
+            return head;
         }
 
-        // Remove the nth node from the end
-        slow.next = slow.next.next;
+       // System.out.println(index);
 
-        return dummy.next;
+        ListNode prev = null;
+        ListNode nxt = null;
+        ListNode cur = null;
+
+        if(mp.containsKey(index-2))
+         prev = mp.get(index-2);
+
+        if(mp.containsKey(index))
+         nxt = mp.get(index);
+
+         if(mp.containsKey(index-1))
+         cur = mp.get(index-1);
+        
+        if(prev == null){
+        head.next = nxt;
+        }
+        else
+         prev.next = nxt;
+         if(cur != null)cur.next = null;
+
+        return head;
     }
 }
